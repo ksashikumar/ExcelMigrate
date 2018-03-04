@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const migrator = require('../lib/migrator');
+
+const filePath = process.argv[2];
+
+require('../config/mongoose').connect();
+
+if (filePath) {
+  migrator.migrate(filePath);
+} else {
+  console.log('Please mention a filepath');
+}

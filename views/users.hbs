@@ -1,0 +1,19 @@
+{{#if isValid}}
+  <h1>Valid Users List</h1>
+{{else}}
+  <h1>Invalid Users List</h1>
+{{/if}}
+
+{{# each items }}
+  <div class="thumbnail">
+    <div class="caption">
+      <h3>{{ this.name }}</h3>
+      <br>
+      <small> Email: {{ this.email}} </small>
+      <br>
+      <small> Phone: {{ this.phone}} </small>
+      <br>
+      <small> Address: {{ this.address}} </small>
+    </div>
+  </div>
+{{/each}}
