@@ -14,12 +14,11 @@
   "scripts": {
     "cli": "node ./bin/cli",
     "start": "node ./bin/web",
-    "worker": "node ./bin/worker",
     "lint": "eslint **/*.js bin/* --ignore-path .gitignore --ignore-pattern internals/scripts",
     "lint:fix": "yarn lint -- --fix",
-    "test": "jest --timeout 20000 --recursive tests",
+    "test": "jest tests",
     "test:unit": "jest tests/unit",
-    "test:integration": "jest --timeout 20000 tests/integration"
+    "test:integration": "jest tests/integration"
   },
   "dependencies": {
     "body-parser": "~1.18.2",
