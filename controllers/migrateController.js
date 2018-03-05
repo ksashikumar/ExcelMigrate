@@ -17,18 +17,33 @@ module.exports = {
     res.render('index', { title: 'ExcelMigrate' });
   },
   startMigrate: (req, res) => {
+    let status;
+    let message;
     if (!req.files || !req.files.file) {
-      res.status(400);
-      return res.render('error', { status: 400, message: 'File missing' });
+      status = 400;
+      message = 'File Missing';
+      return res.render('error', { status: 400, message });
     }
     const filePath = getFilePath(req.files.file);
     req.files.file.mv(filePath, (err) => {
       if (err) {
-        res.status(500);
-        return res.render('error', { status: 500, message: 'Something went wrong', stack: err.stack });
+        status = 500;
       }
-      migrator.migrate(filePath);
-      return res.send('File uploaded!');
+      migrator.migrate(filePath, (migrateErr) => {
+        if (migrateErr) {
+          status = 400;
+          message = err;
+        }
+      });
     });
+    if (status === 400) {
+      res.status(400);
+      return res.render('error', { status: 400, message });
+    } else if (status === 500) {
+      res.status(500);
+      return res.render('error', { status: 500, message: 'Something went wrong' });
+    }
+    res.status(200);
+    return res.send('File uploaded!');
   },
 };

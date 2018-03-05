@@ -7,7 +7,15 @@ const filePath = process.argv[2];
 require('../config/mongoose').connect();
 
 if (filePath) {
-  migrator.migrate(filePath);
+  migrator.migrate(filePath, (err) => {
+    if (err) {
+      console.log(`Failed: ${err}`);
+    } else {
+      console.log('Migrated Successfully');
+    }
+  });
 } else {
   console.log('Please mention a filepath');
 }
+
+process.exit();
